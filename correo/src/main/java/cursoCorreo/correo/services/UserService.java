@@ -1,6 +1,7 @@
 package cursoCorreo.correo.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import cursoCorreo.correo.repository.UserRepository;
 public class UserService {
     //Para lectura complementaria
 	//https://medium.com/javarevisited/spring-beans-in-depth-a6d8b31db8a1
+    //El servicio es para poner el desarrollo de lo que pongamos en la api
+    //El servicio no sabe quien lo llama
+
     @Autowired
     private UserRepository repository;
 
@@ -38,9 +42,11 @@ public class UserService {
         return repository.save(user);// hace insert y update si ya existe
     }
 
-    public List<User> findAll()
+    public List<DtoUser> findAll()
     {
-        return repository.findAll();
+        List<User> l = repository.findAll();
+
+        return l.stream().map( us ->  us.toDtoUser()).collect(Collectors.toList());//Collecters  hace una lista a partir de la anterior
     }
 
 
