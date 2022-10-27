@@ -1,28 +1,28 @@
 package cursoCorreo.correo.dto;
 
+import org.springframework.beans.BeanUtils;
+
+import cursoCorreo.correo.bean.User;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class DtoUser {
     private String user;
 	private String name;
 	private String surname;
 
-    
-    public String getUser() {
-        return user;
+    public static DtoUser fromUser(User user)
+    {
+        if(user==null)
+        return null;
+
+        DtoUser dtoUser = new DtoUser();
+        BeanUtils.copyProperties(user, dtoUser);
+
+        return dtoUser;
     }
-    public void setUser(String user) {
-        this.user = user;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getSurname() {
-        return surname;
-    }
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+
 	
 }

@@ -1,9 +1,10 @@
 package cursoCorreo.correo.controller;
 
 import cursoCorreo.correo.repository.UserRepository;
-import cursoCorreo.correo.services.UserService;
+import cursoCorreo.correo.services.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ import java.util.List;
 @RequestMapping("v1/user")
 public class UserController {
 	
-	@Autowired
-	UserService servicioUsuarios;
+	@Qualifier("realSercice")
+	IUserService servicioUsuarios;
 
 	//Singleton crea una sola instancia de la BD
 	@Autowired//para que cree el objete "new algo()" ;
@@ -34,8 +35,8 @@ public class UserController {
 	@GetMapping("/find/{username}")
 	public DtoUser find(@PathVariable("username") String name)
 	{
-		return servicioUsuarios.findByuser(name);
-		
+		return DtoUser.fromUser(this.servicioUsuarios.findByuser(name));
+	
 	}
 
 
@@ -48,9 +49,9 @@ public class UserController {
 	}
 
 	@GetMapping("/find3")
-	public User find3(@RequestParam("surname") String surname)
+	public DtoUser find3(@RequestParam("surname") String surname)
 	{
-		return servicioUsuarios.findBysurname(surname);
+		return DtoUser.fromUser(servicioUsuarios.findBysurname(surname));
 
 	}
 
@@ -58,7 +59,6 @@ public class UserController {
 	public List<DtoUser> findList()
 	{
 		return servicioUsuarios.findAll();
-
 	}
 	
 	@PostMapping("register")

@@ -1,17 +1,20 @@
-package cursoCorreo.correo.services;
+package cursoCorreo.correo.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import cursoCorreo.correo.bean.User;
 import cursoCorreo.correo.dto.DtoUser;
 import cursoCorreo.correo.repository.UserRepository;
+import cursoCorreo.correo.services.IUserService;
 
 @Service
-public class UserService {
+@Component("realService")
+public class UserServiceImpl implements IUserService{
     //Para lectura complementaria
 	//https://medium.com/javarevisited/spring-beans-in-depth-a6d8b31db8a1
     //El servicio es para poner el desarrollo de lo que pongamos en la api
@@ -54,19 +57,19 @@ public class UserService {
     {   
         return repository.findBysurname(surname);
     }
-
+/*
     public DtoUser findByuser(String name)
     {
         User us = repository.findByuser(name);
 
         return us.toDtoUser();
     }
-/*
+*/
     public User findByuser(String name)
     {
         return repository.findByuser(name);
     }
-*/
+
     public void deleteUser(String user)
     {
         repository.deleteUser3(user);
